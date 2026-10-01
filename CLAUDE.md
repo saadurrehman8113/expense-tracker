@@ -17,29 +17,45 @@ npm run lint       # Run ESLint
 
 ## Architecture
 
-Currently, the app is a single-component architecture:
+The app uses a modular component architecture:
 
-- **App.jsx** (main): Single component managing all state (transactions, form inputs, filters). State includes:
-  - `transactions`: Array of transaction objects with id, description, amount, type (income/expense), category, date
-  - Form state: `description`, `amount`, `type`, `category`
-  - Filter state: `filterType`, `filterCategory`
-  - Derived state: `totalIncome`, `totalExpenses`, `balance` (calculated from transactions)
+**Components:**
+- **App.jsx** (container): Manages transactions state, passes data to child components
+  - State: `transactions` (array of transaction objects)
+  - Handler: `handleAddTransaction(transactionData)` — creates transaction with auto-generated id and passes to child
+  - Renders: Summary, TransactionForm, TransactionList
+
+- **Summary.jsx**: Displays income, expenses, balance summary cards
+  - Props: `transactions`
+  - Internally calculates: `totalIncome`, `totalExpenses`, `balance`
+  - No state
+
+- **TransactionForm.jsx**: Form for adding new transactions
+  - Props: `onAddTransaction(transactionData)` callback
+  - State: `description`, `amount`, `type`, `category` (manages own form state)
+  - On submit, calls `onAddTransaction` with formatted data and clears form
+
+- **TransactionList.jsx**: Displays transaction table with type/category filters
+  - Props: `transactions`
+  - State: `filterType`, `filterCategory` (manages own filters)
+  - Internally filters and displays transactions in a table
 
 **Data flow:**
-- Transactions stored in React state (currently ephemeral—lost on refresh)
-- Add form submits new transactions and resets form
-- Filters apply synchronously to displayed transaction list
+- Transactions stored in App state (currently ephemeral—lost on refresh)
+- Components are self-contained; each manages its own local state
+- Parent-to-child communication via props; child-to-parent via callbacks
+- Amounts are stored as numbers (fixed from initial string bug)
 
 **Styling:** App.css (single stylesheet)
 
 ## Known Areas for Improvement
 
-- **Component splitting**: Transaction table, add form, summary cards, and filters could be extracted into reusable components
-- **State management**: Currently all state in App. Consider extracting context or custom hooks as app grows
-- **Data persistence**: Transactions disappear on page refresh; consider localStorage or backend
-- **Styling**: Basic CSS; could benefit from a component-based approach or utility-first framework
+- **Data persistence**: Transactions disappear on page refresh; consider localStorage or backend API
+- **Styling**: Basic CSS; could benefit from a utility-first framework (Tailwind) or CSS-in-JS
 - **Type safety**: No TypeScript; consider adding for larger refactors
-- **Amount handling**: Amounts stored as strings; should be numbers to prevent calculation bugs
+- **Delete/Edit transactions**: Currently no way to modify or remove transactions
+- **Validation**: Form validation is minimal; could add more comprehensive checks
+- **Testing**: No tests; consider adding unit tests for components and integration tests
 
 ## Technologies
 
