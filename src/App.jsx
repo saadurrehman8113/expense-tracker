@@ -36,21 +36,33 @@ function App() {
 
 
   return (
-    <div className="app">
-      <h1>Finance Tracker</h1>
-      <p className="subtitle">Track your income and expenses</p>
+    <main className="app-shell">
+      <header className="app-header">
+        <div className="brand-lockup">
+          <div className="brand-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div>
+            <h1>Finance Tracker</h1>
+            <p className="subtitle">A clear view of your money</p>
+          </div>
+        </div>
+      </header>
 
       <Summary transactions={transactions} />
 
-      <SpendingChart transactions={transactions} />
-
-      <TransactionForm onAddTransaction={handleAddTransaction} />
+      <div className="overview-grid">
+        <SpendingChart transactions={transactions} />
+        <TransactionForm onAddTransaction={handleAddTransaction} />
+      </div>
 
       <TransactionList
         transactions={transactions}
         onDeleteTransaction={handleDeleteTransaction}
       />
-    </div>
+    </main>
   );
 }
 

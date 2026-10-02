@@ -27,35 +27,50 @@ function TransactionForm({ onAddTransaction }) {
   };
 
   return (
-    <div className="add-transaction">
-      <h2>Add Transaction</h2>
-      <form onSubmit={handleSubmit}>
+    <section className="add-transaction" aria-labelledby="add-transaction-title">
+      <div className="section-heading">
+        <div>
+          <h2 id="add-transaction-title">Add a transaction</h2>
+          <p>Record money in or out.</p>
+        </div>
+      </div>
+      <form className="transaction-form" onSubmit={handleSubmit}>
+        <label htmlFor="transaction-description">Description</label>
         <input
+          id="transaction-description"
           type="text"
-          placeholder="Description"
+          placeholder="e.g. Weekly groceries"
+          required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <label htmlFor="transaction-amount">Amount</label>
         <input
+          id="transaction-amount"
           type="number"
-          placeholder="Amount"
+          placeholder="0.00"
+          min="0.01"
+          step="0.01"
+          required
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <select value={type} onChange={(e) => setType(e.target.value)}>
+        <label htmlFor="transaction-type">Type</label>
+        <select id="transaction-type" value={type} onChange={(e) => setType(e.target.value)}>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <label htmlFor="transaction-category">Category</label>
+        <select id="transaction-category" value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map((cat) => (
             <option key={cat} value={cat}>
               {cat}
             </option>
           ))}
         </select>
-        <button type="submit">Add</button>
+        <button className="add-button" type="submit">Add transaction</button>
       </form>
-    </div>
+    </section>
   );
 }
 

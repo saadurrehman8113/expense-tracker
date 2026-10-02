@@ -8,22 +8,28 @@ function Summary({ transactions }) {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const balance = totalIncome - totalExpenses;
+  const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount);
 
   return (
-    <div className="summary">
-      <div className="summary-card">
-        <h3>Income</h3>
-        <p className="income-amount">${totalIncome}</p>
-      </div>
-      <div className="summary-card">
-        <h3>Expenses</h3>
-        <p className="expense-amount">${totalExpenses}</p>
-      </div>
-      <div className="summary-card">
-        <h3>Balance</h3>
-        <p className="balance-amount">${balance}</p>
-      </div>
-    </div>
+    <section className="summary" aria-label="Financial summary">
+      <article className="summary-card summary-card--balance">
+        <h2>Available balance</h2>
+        <p className="summary-value">{formatCurrency(balance)}</p>
+      </article>
+      <article className="summary-card summary-card--income">
+        <h2>Income</h2>
+        <p className="summary-value">{formatCurrency(totalIncome)}</p>
+      </article>
+      <article className="summary-card summary-card--expenses">
+        <h2>Expenses</h2>
+        <p className="summary-value">{formatCurrency(totalExpenses)}</p>
+      </article>
+    </section>
   );
 }
 

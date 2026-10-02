@@ -1,11 +1,49 @@
+:root {
+  font-family: "Aptos", "Segoe UI", system-ui, sans-serif;
+  color: #233630;
+  background: #f2f6f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --evergreen: #173c35;
+  --leaf: #2f7d68;
+  --ink: #233630;
+  --muted: #75827d;
+  --line: #dfe8e3;
+  --surface: #ffffff;
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #f2f6f4;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  color: #333;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: #f2f6f4;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+::selection {
+  background: #c6e3d5;
+  color: #173c35;
 }

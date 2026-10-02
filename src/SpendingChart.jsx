@@ -8,6 +8,11 @@ import {
   YAxis,
 } from 'recharts';
 
+const formatCurrency = (value) => `$${Number(value).toLocaleString('en-US', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+})}`;
+
 function SpendingChart({ transactions }) {
   const spendingByCategory = transactions
     .filter((transaction) => transaction.type === 'expense')
@@ -30,20 +35,25 @@ function SpendingChart({ transactions }) {
               data={chartData}
               margin={{ top: 8, right: 16, left: 4, bottom: 8 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="#e5ece8" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="category"
                 axisLine={false}
                 tickLine={false}
                 tickMargin={8}
+                tick={{ fill: '#75827d', fontSize: 11 }}
               />
               <YAxis
-                tickFormatter={(value) => `$${Number(value).toLocaleString()}`}
+                tickFormatter={formatCurrency}
                 axisLine={false}
                 tickLine={false}
+                tick={{ fill: '#75827d', fontSize: 11 }}
               />
-              <Tooltip formatter={(value) => [`$${Number(value).toLocaleString()}`, 'Spent']} />
-              <Bar dataKey="amount" fill="#4f46e5" radius={[4, 4, 0, 0]} maxBarSize={48} />
+              <Tooltip
+                formatter={(value) => [formatCurrency(value), 'Spent']}
+                contentStyle={{ border: '1px solid #dfe8e3', borderRadius: 8, fontSize: 12 }}
+              />
+              <Bar dataKey="amount" fill="#2f7d68" radius={[4, 4, 0, 0]} maxBarSize={48} />
             </BarChart>
           </ResponsiveContainer>
         </div>
