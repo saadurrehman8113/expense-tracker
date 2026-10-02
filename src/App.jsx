@@ -24,6 +24,15 @@ function App() {
     setTransactions([...transactions, newTransaction]);
   };
 
+  const handleDeleteTransaction = (transaction) => {
+    const confirmed = window.confirm(`Delete transaction "${transaction.description}"?`);
+    if (!confirmed) return;
+
+    setTransactions((currentTransactions) =>
+      currentTransactions.filter((currentTransaction) => currentTransaction.id !== transaction.id)
+    );
+  };
+
 
   return (
     <div className="app">
@@ -34,7 +43,10 @@ function App() {
 
       <TransactionForm onAddTransaction={handleAddTransaction} />
 
-      <TransactionList transactions={transactions} />
+      <TransactionList
+        transactions={transactions}
+        onDeleteTransaction={handleDeleteTransaction}
+      />
     </div>
   );
 }
